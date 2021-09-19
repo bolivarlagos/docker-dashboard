@@ -154,7 +154,7 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Charts />
-        <Table />        
+        <Table />               
       </Box>
     </Box>
   )
