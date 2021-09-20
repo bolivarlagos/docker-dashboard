@@ -20,6 +20,7 @@ import MailIcon from '@mui/icons-material/Mail'
 
 import Charts from './Charts'
 import Table from './Table'
+import DeployCard from './DeployCard'
 
 const drawerWidth = 240
 
@@ -154,7 +155,8 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Charts />
-        <Table />               
+        <Table />
+        <DeployCard />               
       </Box>
     </Box>
   )
