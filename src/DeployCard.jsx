@@ -21,37 +21,75 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
+import DockerContext from './ContextApi'
 
 export default function BasicCard() {
 
     const [state, setState] = React.useState({ name: '', image: '', port: '', command: '' })
     const [checked, setChecked] = React.useState(false)
     const [radio, setRadio] = React.useState(true)
+    const [id, setId] = React.useState('')
+    const [action, setAction] = React.useState('')
 
-    const handleChange = e => {
-        if(e.target.name === 'port'){
-            console.log('ok')
-            console.log(typeof(e.target.value))
+    const { ids } = React.useContext(DockerContext)
+    console.log('this is ids', ids)
 
-            typeof(e.target.value) !== 'number' ? setState({...state, [e.target.name] : ''}) : setState({...state, [e.target.name]: e.target.value})
-        } else {
-            setState({...state, [e.target.name]: e.target.value})
+    const postData = async () => {
+        const content = {...state }   
+
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(content)
         }
+
+        const res = await fetch('http://localhost:4000/run', options)
+        setState({...state, name: '', image: '', port: '', command: '' })
     }
+
+    const sendAction = async () => {
+        const content = { id, action }   
+        console.log(content)
+
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(content)
+        }
+
+        const res = await fetch('http://localhost:4000/action', options)
+        setId('')
+        setAction('')
+
+    }
+
+    const handleChange = e => setState({...state, [e.target.name]: e.target.value})
 
     const handleCancel = e => setState({...state, name: '', image: '', port: '', command: '' } )
 
-    const fetchData = async () => {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts')
-        const js = await res.json()
-        console.log(js)
-    }
-
     const handleSwitch = e => setChecked(!checked)
     
-    const handleCreate = e => fetchData()
+    const handleCreate = e => postData()
 
     const buttonChange = e => setRadio(!radio)
+
+    const handleId = e => {
+        console.log('value', e.target.value)
+
+        setId(e.target.value)
+        console.log('new value', id)
+    }
+    const handleAction = e => {
+        console.log('value', e.target.value)
+
+        setAction(e.target.value)
+        console.log('new value', id)
+    }
+
+    const handleCancelation = () => {
+        setId('')
+        setAction('')
+    }
         
 
   return (
@@ -106,8 +144,8 @@ export default function BasicCard() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl fullWidth>
                             <InputLabel >Image ID</InputLabel>
-                            <Select>
-                                {['id-1', 'id-2', 'id-3'].map(id => <MenuItem value={id}>{id}</MenuItem>)}                                
+                            <Select value={id} onChange={handleId}>
+                                {ids.map((dockerid, index) => <MenuItem key={index} name={dockerid} value={dockerid}>{dockerid}</MenuItem>)}                                
                             </Select>
                         </FormControl>
                     </Grid>
@@ -117,9 +155,9 @@ export default function BasicCard() {
                     <Grid item xs={12} sm={6} md={6}>
                         <FormControl fullWidth>
                             <InputLabel >Action</InputLabel>
-                            <Select>
-                                <MenuItem value="start">Start</MenuItem>
-                                <MenuItem value="stop">Stop</MenuItem>                                
+                            <Select value={action} onChange={handleAction}>
+                                <MenuItem name="start" value="start">Start</MenuItem>
+                                <MenuItem name="stop" value="stop">Stop</MenuItem>                                
                             </Select>
                         </FormControl>
                     </Grid>
@@ -130,8 +168,8 @@ export default function BasicCard() {
                     
                     <Grid item xs={12} sm={6} md={6}>                        
                         <Stack spacing={2} direction="row">
-                            <Button variant="outlined">Cancel</Button>
-                            <Button variant="contained">Create</Button>                                    
+                            <Button variant="outlined" onClick={handleCancelation}>Cancel</Button>
+                            <Button variant="contained" onClick={sendAction}>Create</Button>                                    
                         </Stack>                        
                     </Grid>
                 </Grid>

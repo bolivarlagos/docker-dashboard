@@ -8,6 +8,7 @@ module.exports.getContainers = (req, res) => {
         let tableBody = []   
         let containerImages = []
         let containerNames = []   
+        let containerIds = []
 
         for (let i = 0; i < stats.length; i++) {
 
@@ -17,22 +18,18 @@ module.exports.getContainers = (req, res) => {
             if (i === 0) {
                 tableHead = [...filteredInnerRows]
             } else {
-                if(filteredInnerRows[1] !== undefined){
-                    containerImages.push(filteredInnerRows[1])
-                }
-                if(filteredInnerRows[6] !== undefined){
-                    containerNames.push(filteredInnerRows[6])                
-                } 
+                if(filteredInnerRows[0]) containerIds.push(filteredInnerRows[0])
+                if(filteredInnerRows[1]) containerImages.push(filteredInnerRows[1])
                 tableBody.push(filteredInnerRows)
             }
         }    
-        console.log(tableHead, tableBody)
+        console.log(containerImages, containerNames, containerIds)
         res.json({ 
             head: tableHead, 
             body: tableBody, 
             images: containerImages, 
-            names: containerNames 
+            names: containerNames,
+            ids: containerIds
         })
-    })
-    
+    })    
 }
