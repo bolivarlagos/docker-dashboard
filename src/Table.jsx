@@ -9,13 +9,9 @@ import Paper from '@mui/material/Paper'
 
 import DockerContext from './ContextApi'
 
-
 export default function BasicTable() {
   const { head, body } = React.useContext(DockerContext)
-  const [action, setAction] = React.useState('Action')
-
-  const handleChange = e => setAction(e.target.value)
-  
+    
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

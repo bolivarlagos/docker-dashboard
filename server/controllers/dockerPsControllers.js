@@ -23,7 +23,6 @@ module.exports.getContainers = (req, res) => {
                 tableBody.push(filteredInnerRows)
             }
         }    
-        console.log(containerImages, containerNames, containerIds)
         res.json({ 
             head: tableHead, 
             body: tableBody, 

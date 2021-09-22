@@ -1,43 +1,28 @@
 import React from 'react'
-import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 
 import Donut from './Donut'
+import DockerContext from './ContextApi'
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}))
+import { green, blue, activeStatus, pausedStatus } from './utils/utils'
 
-export default function RowAndColumnSpacing() {
+const RowAndColumnSpacing = () => {
+
+  const { ids } = React.useContext(DockerContext)
+
   return (
     <Box sx={{ mt: 1 , mb: 5}}>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
-            <Item>
-              <Donut />
-            </Item>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
+        <Grid item xs={12} sm={6} md={6}>
+          <Donut ids={ids} color={green} status={activeStatus} total={3}/>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-            <Item>
-              <Donut />
-            </Item>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-            <Item>
-              <Donut />
-            </Item>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-            <Item>
-              <Donut />
-            </Item>
-        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <Donut ids={ids} color={blue} status={pausedStatus} total={1}/>
+        </Grid>      
       </Grid>
     </Box>
   )
 }
+
+export default RowAndColumnSpacing

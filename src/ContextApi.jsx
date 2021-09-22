@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { dashboard } from './utils/utils'
+
 const DockerProvider = React.createContext()
 
 export const ContextProvider = ({ children }) => {
@@ -11,7 +13,7 @@ export const ContextProvider = ({ children }) => {
 
     const fetchData = async () => {
         
-        const res = await fetch('http://localhost:4000/dashboard')
+        const res = await fetch(dashboard)
         const js = await res.json()
         const { head, body, ids } = await js 
 
@@ -23,8 +25,7 @@ export const ContextProvider = ({ children }) => {
 
     React.useEffect(() => {
         fetchData()       
-    }, []) 
-    
+    }, [])   
 
     return (
         <DockerProvider.Provider value={{ data, head, body, ids }}>

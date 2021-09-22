@@ -23,6 +23,8 @@ import Select from '@mui/material/Select'
 
 import DockerContext from './ContextApi'
 
+import { localhost } from './utils/utils'
+
 export default function BasicCard() {
 
     const [state, setState] = React.useState({ name: '', image: '', port: '', command: '' })
@@ -32,10 +34,11 @@ export default function BasicCard() {
     const [action, setAction] = React.useState('')
 
     const { ids } = React.useContext(DockerContext)
-    console.log('this is ids', ids)
 
-    const postData = async () => {
-        const content = {...state }   
+    const executeContainer = async (actions) => {
+
+        let content
+        actions === '/run' ? content = {...state } : content = { id, action }
 
         const options = {
             method: 'POST',
@@ -43,35 +46,22 @@ export default function BasicCard() {
             body: JSON.stringify(content)
         }
 
-        const res = await fetch('http://localhost:4000/run', options)
+        await fetch(localhost + actions, options)
+
         setState({...state, name: '', image: '', port: '', command: '' })
-    }
-
-    const sendAction = async () => {
-        const content = { id, action }   
-        console.log(content)
-
-        const options = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(content)
-        }
-
-        const res = await fetch('http://localhost:4000/action', options)
         setId('')
         setAction('')
-
     }
 
     const handleChange = e => setState({...state, [e.target.name]: e.target.value})
 
-    const handleCancel = e => setState({...state, name: '', image: '', port: '', command: '' } )
+    const handleCancel = () => setState({...state, name: '', image: '', port: '', command: '' } )
 
-    const handleSwitch = e => setChecked(!checked)
+    const handleSwitch = () => setChecked(!checked)
     
-    const handleCreate = e => postData()
+    const handleCreate = () => executeContainer('/run')
 
-    const buttonChange = e => setRadio(!radio)
+    const buttonChange = () => setRadio(!radio)
 
     const handleId = e => {
         console.log('value', e.target.value)
@@ -93,7 +83,7 @@ export default function BasicCard() {
         
 
   return (
-    <Card sx={{ minWidth: 275, minHeight: 400 }}>
+    <Card sx={{ minWidth: 275, minHeight: 400, mt: 5, mb: 1 }}>
         <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                 Deploy a Container
@@ -169,7 +159,7 @@ export default function BasicCard() {
                     <Grid item xs={12} sm={6} md={6}>                        
                         <Stack spacing={2} direction="row">
                             <Button variant="outlined" onClick={handleCancelation}>Cancel</Button>
-                            <Button variant="contained" onClick={sendAction}>Create</Button>                                    
+                            <Button variant="contained" onClick={() => executeContainer('/action')}>Create</Button>                                    
                         </Stack>                        
                     </Grid>
                 </Grid>
@@ -179,23 +169,4 @@ export default function BasicCard() {
     </Card>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
+     

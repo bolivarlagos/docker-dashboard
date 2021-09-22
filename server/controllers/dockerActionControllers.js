@@ -7,13 +7,13 @@ module.exports.dockerAction = (req, res) => {
     switch(action){
 
         case 'start':
-            exec('docker restart ' + id, (err, stdout, stderr) => {
+            exec(`docker restart ${id}`, (err, stdout, stderr) => {
                 console.log(stdout)
             })
             break
         
         case 'stop':
-            exec('docker stop ' + id, (err, stdout, stderr) => {
+            exec(`docker stop ${id}`, (err, stdout, stderr) => {
                 console.log(stdout)
             })
             break

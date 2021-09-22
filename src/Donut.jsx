@@ -1,13 +1,23 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
-import DockerContext from './ContextApi'
 
-const Donut = () => {
+import { options } from './utils/utils'
+
+
+const Donut = ({ ids, color, status, total }) => {
     
-    const { data } = React.useContext(DockerContext)    
+    const totalSize = ids.length
+
+    const data = {
+        datasets: [{
+            data: [total, totalSize],
+            backgroundColor: color }],
+        labels: [status, 'Total']        
+    }
+   
 
     return (
-        <Doughnut data={data} width={100} height={50}/>
+        <Doughnut data={data} options={options} />
     )
 }
 
