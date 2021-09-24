@@ -5,5 +5,5 @@ export const pausedStatus = 'Paused'
 export const dashboard = 'http://localhost:4000/dashboard'
 export const localhost = 'http://localhost:4000'
 export const options = { maintainAspectRatio: false }
-
+export const menu = ['Dashboard', 'Containers', 'Dummy', 'Dummy', 'Dummy', 'Dummy', 'Dummy']
 

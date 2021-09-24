@@ -3,22 +3,28 @@ import { Doughnut } from 'react-chartjs-2'
 
 import { options } from './utils/utils'
 
-
-const Donut = ({ ids, color, status, total }) => {
+const Donut = (props) => {
     
-    const totalSize = ids.length
+    const { ids, color, status, actives, inactives } = props
+    const totalSize = ids.length 
+    let activesLength = null
+    let inactivesLength = null
+    
+    if(actives){ 
+        activesLength = actives.length
+    }
+    if(inactives){
+        inactivesLength = inactives.length
+    } 
 
     const data = {
         datasets: [{
-            data: [total, totalSize],
+            data: [activesLength || inactivesLength, totalSize],
             backgroundColor: color }],
         labels: [status, 'Total']        
-    }
-   
+    }   
 
-    return (
-        <Doughnut data={data} options={options} />
-    )
+    return <Doughnut data={data} options={options} />    
 }
 
 export default Donut

@@ -25,7 +25,7 @@ import DockerContext from './ContextApi'
 
 import { localhost } from './utils/utils'
 
-export default function BasicCard() {
+const BasicCard = () => {
 
     const [state, setState] = React.useState({ name: '', image: '', port: '', command: '' })
     const [checked, setChecked] = React.useState(false)
@@ -48,7 +48,7 @@ export default function BasicCard() {
 
         await fetch(localhost + actions, options)
 
-        setState({...state, name: '', image: '', port: '', command: '' })
+        handleCancel()
         setId('')
         setAction('')
     }
@@ -63,24 +63,14 @@ export default function BasicCard() {
 
     const buttonChange = () => setRadio(!radio)
 
-    const handleId = e => {
-        console.log('value', e.target.value)
+    const handleId = e => setId(e.target.value)
 
-        setId(e.target.value)
-        console.log('new value', id)
-    }
-    const handleAction = e => {
-        console.log('value', e.target.value)
-
-        setAction(e.target.value)
-        console.log('new value', id)
-    }
+    const handleAction = e => setAction(e.target.value)
 
     const handleCancelation = () => {
         setId('')
         setAction('')
-    }
-        
+    }        
 
   return (
     <Card sx={{ minWidth: 275, minHeight: 400, mt: 5, mb: 1 }}>
@@ -108,7 +98,7 @@ export default function BasicCard() {
                         <Typography>A brief Container Image description</Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                        <TextField disabled={checked} value={state.port} name="port" type="number" onChange={handleChange} label="Container Port" variant="outlined" />                       
+                        <TextField disabled={checked} value={state.port} name="port" onChange={handleChange} label="Container Port" variant="outlined" />                       
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                         <Typography>A brief Container Port description</Typography>
@@ -169,4 +159,5 @@ export default function BasicCard() {
     </Card>
   )
 }
-     
+
+export default BasicCard

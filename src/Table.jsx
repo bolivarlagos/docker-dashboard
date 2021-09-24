@@ -17,18 +17,36 @@ export default function BasicTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow >
-            { head.map((item, index) => index === 0 ? <TableCell key={index}>{item}</TableCell> : <TableCell key={index} align="right">{item}</TableCell>)}       
+            { head.map((item, index) => 
+                index === 0 
+                  ? <TableCell key={index}>{item}</TableCell> 
+                  : <TableCell key={index} align="right">{item}</TableCell>
+            )}       
           </TableRow>
         </TableHead>
-        <TableBody>
-          {body.map((row, index) => (            
+        <TableBody> 
+        {body.map((row, index) =>  {
+          let newRow = [...row]
+          let last = null
+          if(row.length < 7){
+            last = newRow.pop()
+            newRow = newRow.concat('Not Assigned', last) 
+          }  
+          return (                   
             <TableRow 
               key={index} 
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              {row.map((cell, index) => index === 0 ? <TableCell component="th" scope="row" key={index}>{cell}</TableCell>: <TableCell key={index} align="right">{ cell || 'not created'}</TableCell>)}                          
-            </TableRow>            
-          ))}          
+              {newRow.map((cell, index) => {
+                return (
+                !index 
+                  ? <TableCell component="th" scope="row" key={index}>{cell}</TableCell> 
+                  : <TableCell key={index} align="right">{ cell }</TableCell>  
+                )                           
+              })}                          
+            </TableRow>  
+            )          
+          })}
         </TableBody>
       </Table>
     </TableContainer>

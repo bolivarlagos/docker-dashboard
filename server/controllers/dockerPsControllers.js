@@ -23,12 +23,30 @@ module.exports.getContainers = (req, res) => {
                 tableBody.push(filteredInnerRows)
             }
         }    
+        
+        tableBody.pop()
+
+        let actives = []
+        let inactives = []
+
+        tableBody.forEach(arr => {
+            
+            if(arr[4].includes('Up', [0, 1])){
+                actives.push(arr[4])                
+            }
+            if(arr[4].includes('Exited', [0, 5])){
+                inactives.push(arr[4])                
+            }
+        })
+
         res.json({ 
             head: tableHead, 
             body: tableBody, 
             images: containerImages, 
             names: containerNames,
-            ids: containerIds
+            ids: containerIds,
+            actives,
+            inactives
         })
     })    
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Switch, Route, Link } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
@@ -15,12 +16,14 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import PostAddIcon from '@mui/icons-material/PostAdd'
+import TableChartIcon from '@mui/icons-material/TableChart'
 
 import Charts from './Charts'
 import Table from './Table'
 import DeployCard from './DeployCard'
+
+import { menu } from './utils/utils'
 
 const drawerWidth = 240
 
@@ -50,7 +53,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }))
 
@@ -89,7 +91,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 )
 
-export default function MiniDrawer() {
+const MiniDrawer = () => {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
 
@@ -131,33 +133,34 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {menu.map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <ListItemIcon>                
+                {index % 2 === 0 ? <Link to="/dashboard" style={{textDecoration: 'none', color: 'inherit'}}><TableChartIcon /></Link> : <Link style={{textDecoration: 'none', color: 'inherit'}} to="/create"><PostAddIcon /></Link> }                
               </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <Link className="links" to={index % 2 === 0 ? '/dashboard' : '/create'} 
+                style={{textDecoration: 'none', color: 'inherit'}}
+              >             
+                <ListItemText primary={text} />
+              </Link>
             </ListItem>
           ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Charts />
-        <Table />
-        <DeployCard />               
+          <Switch>
+            <Route exact path="/dashboard"> 
+              <Charts />
+              <Table />
+            </Route>
+            <Route path="/create">
+              <DeployCard />
+            </Route>
+          </Switch>                 
       </Box>
     </Box>
   )
 }
+
+export default MiniDrawer

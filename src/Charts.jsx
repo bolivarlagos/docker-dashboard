@@ -9,16 +9,16 @@ import { green, blue, activeStatus, pausedStatus } from './utils/utils'
 
 const RowAndColumnSpacing = () => {
 
-  const { ids } = React.useContext(DockerContext)
+  const { ids, actives, inactives } = React.useContext(DockerContext)
 
   return (
     <Box sx={{ mt: 1 , mb: 5}}>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
         <Grid item xs={12} sm={6} md={6}>
-          <Donut ids={ids} color={green} status={activeStatus} total={3}/>
+          <Donut ids={ids} color={green} status={activeStatus} actives={actives} />
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <Donut ids={ids} color={blue} status={pausedStatus} total={1}/>
+          <Donut ids={ids} color={blue} status={pausedStatus} inactives={inactives}/>
         </Grid>      
       </Grid>
     </Box>
