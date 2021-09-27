@@ -1,6 +1,6 @@
 import React from 'react'
-import { Switch, Route, Link } from 'react-router-dom'
-import { styled, useTheme } from '@mui/material/styles'
+import { Switch, Route, Link, Redirect} from 'react-router-dom'
+import { styled, useTheme, alpha} from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
@@ -18,14 +18,61 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import TableChartIcon from '@mui/icons-material/TableChart'
+import SearchIcon from '@mui/icons-material/Search'
+import InputBase from '@mui/material/InputBase'
 
 import Charts from './Charts'
 import Table from './Table'
 import DeployCard from './DeployCard'
-
 import { menu } from './utils/utils'
+import FileDocker from './FileDocker'
+import { ReactComponent as DockerIcon } from './icons/docker-brands.svg'
 
 const drawerWidth = 240
+
+const menuIcons = (num) => {
+  let elements = [<TableChartIcon />, <DockerIcon width={24} height={24}/>, <PostAddIcon />]
+  return elements[num]
+}
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}))
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}))
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}))
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -106,7 +153,7 @@ const MiniDrawer = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open}>        
         <Toolbar>
           <IconButton
             color="inherit"
@@ -119,11 +166,21 @@ const MiniDrawer = () => {
             }}
           >
             <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          </IconButton>          
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
             Docker Dashboard
           </Typography>
-        </Toolbar>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+          <DockerIcon width={32} height={32}/>  
+        </Toolbar>        
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
@@ -135,13 +192,11 @@ const MiniDrawer = () => {
         <List>
           {menu.map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>                
-                {index % 2 === 0 ? <Link to="/dashboard" style={{textDecoration: 'none', color: 'inherit'}}><TableChartIcon /></Link> : <Link style={{textDecoration: 'none', color: 'inherit'}} to="/create"><PostAddIcon /></Link> }                
+              <ListItemIcon>
+                <Link to={text.route} style={{textDecoration: 'none', color: 'inherit'}}>{menuIcons(index)}</Link>
               </ListItemIcon>
-              <Link className="links" to={index % 2 === 0 ? '/dashboard' : '/create'} 
-                style={{textDecoration: 'none', color: 'inherit'}}
-              >             
-                <ListItemText primary={text} />
+              <Link to={text.route} style={{textDecoration: 'none', color: 'inherit'}}>
+                  <ListItemText primary={text.name} />
               </Link>
             </ListItem>
           ))}
@@ -150,12 +205,18 @@ const MiniDrawer = () => {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
           <Switch>
-            <Route exact path="/dashboard"> 
+            <Route exact path="/">
+              <Redirect to="/dashboard"/>
+            </Route>
+            <Route path="/dashboard"> 
               <Charts />
               <Table />
             </Route>
             <Route path="/create">
               <DeployCard />
+            </Route>
+            <Route path="/dockerfile">
+              <FileDocker />
             </Route>
           </Switch>                 
       </Box>

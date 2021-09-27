@@ -22,9 +22,10 @@ const Donut = (props) => {
             data: [activesLength || inactivesLength, totalSize],
             backgroundColor: color }],
         labels: [status, 'Total']        
-    }   
+    }  
 
-    return <Doughnut data={data} options={options} />    
+
+    return <Doughnut data={data} options={options} /> 
 }
 
 export default Donut
