@@ -37,7 +37,7 @@ const FileDocker = () => {
             <CardContent>
                 <Typography 
                     sx={{ fontSize: 14 }} 
-                    color="text.primary" 
+                    color="text.secondary" 
                     gutterBottom
                 >
                     Create Docker File 
@@ -59,8 +59,10 @@ const FileDocker = () => {
                             />                            
                         </Grid>            
                         <Grid item xs={12} sm={6} md={6}>                        
-                            <Typography>
-                                This is be the name of the image that you will build.
+                            <Typography 
+                                sx={{ fontSize: 12 }} 
+                                color="text.secondary">
+                                    This is be the name of the image that you will build.
                             </Typography>                        
                         </Grid>
                         <Grid item xs={12} sm={6} md={6}> 
@@ -78,7 +80,9 @@ const FileDocker = () => {
                             />
                         </Grid>                            
                         <Grid item xs={12} sm={6} md={6}>                        
-                            <Typography>
+                            <Typography
+                            sx={{ fontSize: 12 }} 
+                            color="text.secondary">
                                 By creating a Dockerfile you can build your own customizable image based on a base image,
                                 you can use that same image to later deploy new applications.
                                 Once your image is created you no longer need the Dockerfile, so the Dockerfile content 

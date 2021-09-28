@@ -120,7 +120,7 @@ const BasicCard = () => {
                             variant="outlined" />                                                
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>                        
-                        <Typography>
+                        <Typography sx={{ fontSize: 12 }} color="text.secondary">
                             A container is a standard unit of software 
                             that packages up code and all its dependencies so the 
                             application runs quickly and reliably.
@@ -136,7 +136,7 @@ const BasicCard = () => {
                             variant="outlined" />                                                   
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                        <Typography>
+                        <Typography sx={{ fontSize: 12 }} color="text.secondary">
                             A Docker container image is a lightweight, 
                             standalone, executable package of software that includes 
                             everything needed to run an application.
@@ -152,7 +152,7 @@ const BasicCard = () => {
                             variant="outlined" />                       
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                        <Typography>
+                        <Typography sx={{ fontSize: 12 }} color="text.secondary">
                             To access the application 
                             in the container via a port number, you need to map the port number 
                             of the container to the port number of the host.
@@ -172,7 +172,8 @@ const BasicCard = () => {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                        <Typography>Start your container using 
+                        <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                            Start your container using 
                             the docker run command and specify 
                             the name of the image you just created
                         </Typography>
@@ -214,7 +215,7 @@ const BasicCard = () => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>                        
-                        <Typography>
+                        <Typography sx={{ fontSize: 12 }} color="text.secondary">
                             Select one of the Id's in the select field, 
                             each id is a reference for the containers that are 
                             running on the server. 
@@ -232,7 +233,7 @@ const BasicCard = () => {
                         </FormControl>
                     </Grid>                    
                     <Grid item xs={12} sm={6} md={6}>                        
-                        <Typography>
+                        <Typography sx={{ fontSize: 12 }} color="text.secondary">
                             Select one of the action that you want to 
                             execute in the specific container, this action 
                             will be applied in the container that you previously selected.

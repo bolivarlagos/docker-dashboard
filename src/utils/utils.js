@@ -18,8 +18,15 @@ export const menu = [
     {
         name: 'Dockerfile', 
         route: '/dockerfile',
+    },
+    {
+        name: 'Reload', 
+        route: '',
     }
 ]
-
-
-
+export const noData = {
+    datasets: [{
+        data: [2, 2],
+        backgroundColor: 'rgba(54, 162, 235, 0.2)' }],
+    labels: ['Fetching', 'Total']        
+}

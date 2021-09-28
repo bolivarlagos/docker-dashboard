@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import TableChartIcon from '@mui/icons-material/TableChart'
 import SearchIcon from '@mui/icons-material/Search'
+import Autorenew from '@mui/icons-material/Autorenew'
 import InputBase from '@mui/material/InputBase'
 
 import Charts from './Charts'
@@ -31,7 +32,7 @@ import { ReactComponent as DockerIcon } from './icons/docker-brands.svg'
 const drawerWidth = 240
 
 const menuIcons = (num) => {
-  let elements = [<TableChartIcon />, <DockerIcon width={24} height={24}/>, <PostAddIcon />]
+  let elements = [<TableChartIcon />, <DockerIcon width={24} height={24}/>, <PostAddIcon />, <Autorenew onClick={() => window.location.reload()}/>]
   return elements[num]
 }
 
