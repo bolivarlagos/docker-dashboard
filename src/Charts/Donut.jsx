@@ -1,8 +1,8 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
-import { options } from './utils/utils'
-import DockerContext from './ContextApi'
+import { options } from '../utils/utils'
+import DockerContext from '../Context/ContextApi'
 import DummyChart from './DummyChart'
 
 
@@ -31,10 +31,7 @@ const Donut = (props) => {
 
     return (
         <>
-            { isFetching 
-                ? <DummyChart />
-                : <Doughnut data={data} options={options} />
-            }
+            {isFetching ? <DummyChart /> : <Doughnut data={data} options={options} />}
         </> 
     )     
 }

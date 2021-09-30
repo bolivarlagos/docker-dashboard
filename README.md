@@ -2,17 +2,19 @@
 
 <img src="src/icons/screen.png" alt="main-page">
 
+## In progress
+
 Linux:
 ```
 git clone this repo
 ```
 
 ```
-cd docker-dashboard && npm install
+cd dashboard && npm install
 ```
 
 ```
-cd server && node server && cd..
+cd server && npm install && node server && cd..
 ```
 
 ```

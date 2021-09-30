@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { dashboard } from './utils/utils'
+import { dashboard } from '../utils/utils'
 
 const DockerProvider = React.createContext()
 

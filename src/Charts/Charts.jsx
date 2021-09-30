@@ -3,9 +3,9 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 
 import Donut from './Donut'
-import DockerContext from './ContextApi'
+import DockerContext from '../Context/ContextApi'
 
-import { green, blue, activeStatus, pausedStatus } from './utils/utils'
+import { green, blue, activeStatus, pausedStatus } from '../utils/utils'
 
 const RowAndColumnSpacing = () => {
 

@@ -8,7 +8,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Box from '@mui/material/Box'
 
-import { builder } from './utils/utils'
+import { builder } from '../utils/utils'
 
 const FileDocker = () => {
     
