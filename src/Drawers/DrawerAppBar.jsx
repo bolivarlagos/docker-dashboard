@@ -8,6 +8,7 @@ import MuiAppBar from '@mui/material/AppBar'
 import InputBase from '@mui/material/InputBase'
 import IconButton from '@mui/material/IconButton'
 import { ReactComponent as DockerIcon } from '../icons/docker-brands.svg'
+import DockerContext from '../Context/ContextApi'
 
 const drawerWidth = 240
 
@@ -69,7 +70,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 
-const DrawerAppBar = ({ theme, styled, alpha, open, handleDrawerOpen }) => {
+const DrawerAppBar = ({ open, handleDrawerOpen }) => {
+
+    const [search, setSearch] = React.useState('')
+    const { body, setFilteredBody } = React.useContext(DockerContext)
+
+    const handleChange = (e) => setSearch(e.target.value)        
+
+    const keyPress = (e) => {
+        
+        if(e.keyCode === 13){
+
+            let filtered = body.filter(item => item[0] === search || item[6] === search)
+            console.log(filtered)
+            setFilteredBody(filtered)
+            setSearch('')
+        }
+    }    
 
     return (
         <AppBar position="fixed" open={open}>        
@@ -90,13 +107,16 @@ const DrawerAppBar = ({ theme, styled, alpha, open, handleDrawerOpen }) => {
                     Docker Dashboard
                 </Typography>
                 <Search>
-                <SearchIconWrapper>
-                    <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                />
+                    <SearchIconWrapper>
+                        <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                        onKeyDown={keyPress}
+                        onChange={handleChange}
+                        value={search}
+                    />
                 </Search>
                 <DockerIcon width={32} height={32}/>  
             </Toolbar>        

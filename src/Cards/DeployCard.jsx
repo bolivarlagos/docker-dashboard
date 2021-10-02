@@ -18,8 +18,11 @@ const BasicCard = () => {
   return (
     <Card sx={{ minWidth: 275, minHeight: 400, mt: 5, mb: 1 }}>
         <CardContent>
-            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Deploy a Container
+            <Typography 
+                sx={{ fontSize: 14 }} 
+                color="text.primary" 
+                gutterBottom>
+                    Deploy a Container
             </Typography>
             <RadioGroup 
                 onChange={buttonChange} 

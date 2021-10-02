@@ -12,7 +12,7 @@ import { menu } from '../utils/utils'
 
 
 const menuIcons = (num) => {
-    let elements = [
+    const elements = [
       <TableChartIcon />, 
       <DockerIcon width={24} height={24}/>, 
       <PostAddIcon />, 

@@ -10,9 +10,7 @@ import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 
 import DockerContext from '../Context/ContextApi'
-import { localhost } from '../utils/utils'
-
-
+import { actions } from '../utils/utils'
 
 const ExistentContainer = () => {
 
@@ -20,7 +18,7 @@ const ExistentContainer = () => {
     const [action, setAction] = React.useState('')
     const history = useHistory()   
 
-    const { ids } = React.useContext(DockerContext)
+    const { ids, PostData } = React.useContext(DockerContext)
 
     const handleId = e => setId(e.target.value)
     const handleAction = e => setAction(e.target.value)    
@@ -30,17 +28,11 @@ const ExistentContainer = () => {
         setAction('')
     }
 
-    const executeContainer = async () => {
+    const executeContainer = () => {
 
         const content = { id, action }
 
-        const options = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(content)
-        }
-
-        await fetch(localhost + '/action', options)
+        PostData(content, actions)
 
         handleCancelation()
 
@@ -60,7 +52,9 @@ const ExistentContainer = () => {
             columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid item xs={12} sm={6} md={6}>
                 <FormControl fullWidth>
-                    <InputLabel >Image ID</InputLabel>
+                    <InputLabel >
+                        Image ID
+                    </InputLabel>
                     <Select value={id} onChange={handleId}>
                         {ids.map(dockerid => {
                             return (
@@ -76,7 +70,7 @@ const ExistentContainer = () => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-                <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                <Typography sx={{ fontSize: 12 }} color="text.primary">
                     Select one of the Id's in the select field,
                     each id is a reference for the containers that are
                     running on the server.
@@ -94,7 +88,7 @@ const ExistentContainer = () => {
                 </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-                <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                <Typography sx={{ fontSize: 12 }} color="text.primary">
                     Select one of the action that you want to
                     execute in the specific container, this action
                     will be applied in the container that you previously selected.
@@ -107,12 +101,12 @@ const ExistentContainer = () => {
                     <Button
                         variant="outlined"
                         onClick={handleCancelation}>
-                        Cancel
+                            Cancel
                     </Button>
                     <Button
                         variant="contained"
                         onClick={executeContainer}>
-                        Run
+                            Run
                     </Button>
                 </Stack>
             </Grid>

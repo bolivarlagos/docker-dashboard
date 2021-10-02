@@ -5,13 +5,16 @@ import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Switch from '@mui/material/Switch'
-import { localhost } from '../utils/utils'
+
+import DockerContext from '../Context/ContextApi'
+import { run } from '../utils/utils'
 
 
 const NewContainer = () => {
 
     const [state, setState] = React.useState({ name: '', image: '', port: '', command: '' })
     const [checked, setChecked] = React.useState(false) 
+    const { PostData } = React.useContext(DockerContext)
     
 
     const handleChange = e => setState({...state, [e.target.name]: e.target.value})
@@ -20,17 +23,11 @@ const NewContainer = () => {
     const handleCancel = () => setState({...state, name: '', image: '', port: '', command: '' })
     
 
-    const executeContainer = async () => {
+    const executeContainer = () => {
 
         const content = {...state }
 
-        const options = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(content)
-        }
-
-        await fetch(localhost + '/run', options)
+        PostData(content, run)
 
         handleCancel()   
     }
@@ -50,7 +47,7 @@ const NewContainer = () => {
                     variant="outlined" />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-                <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                <Typography sx={{ fontSize: 12 }} color="text.primary">
                     A container is a standard unit of software
                     that packages up code and all its dependencies so the
                     application runs quickly and reliably.
@@ -66,7 +63,7 @@ const NewContainer = () => {
                     variant="outlined" />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-                <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                <Typography sx={{ fontSize: 12 }} color="text.primary">
                     A Docker container image is a lightweight,
                     standalone, executable package of software that includes
                     everything needed to run an application.
@@ -82,9 +79,10 @@ const NewContainer = () => {
                     variant="outlined" />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-                <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                <Typography sx={{ fontSize: 12 }} color="text.primary">
                     To access the application
-                    in the container via a port number, you need to map the port number
+                    in the container via a port number, 
+                    you need to map the port number
                     of the container to the port number of the host.
                 </Typography>
             </Grid>
@@ -102,7 +100,7 @@ const NewContainer = () => {
                 />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-                <Typography sx={{ fontSize: 12 }} color="text.secondary">
+                <Typography sx={{ fontSize: 12 }} color="text.primary">
                     Start your container using
                     the docker run command and specify
                     the name of the image you just created

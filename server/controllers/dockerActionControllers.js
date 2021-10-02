@@ -1,8 +1,8 @@
 const { exec } = require('child_process')
 
-module.exports.dockerAction = (req, res) => {
+module.exports.dockerAction = (req, res) => {    
     
-    const { id, action } = req.body
+    const { id, action } = req.body 
 
     switch(action){
 

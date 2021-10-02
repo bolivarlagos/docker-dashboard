@@ -8,27 +8,24 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Box from '@mui/material/Box'
 
+import DockerContext from '../Context/ContextApi'
 import { builder } from '../utils/utils'
+
 
 const FileDocker = () => {
     
     const [names, setNames] = React.useState({ name: '', file: '' })
+    const { PostData } = React.useContext(DockerContext)
 
     const handleChange = (e) => setNames({...names, [e.target.name]: e.target.value })
 
     const clear = () => setNames({ name: '', file: '' })
 
-    const build = async () => {
+    const build = () => {
 
         let content = {...names }
-
-        const options = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(content)
-        }
         
-        await fetch(builder, options)
+        PostData(content, builder)
         clear()        
     }
 
@@ -37,17 +34,15 @@ const FileDocker = () => {
             <CardContent>
                 <Typography 
                     sx={{ fontSize: 14 }} 
-                    color="text.secondary" 
-                    gutterBottom
-                >
+                    color="text.primary" 
+                    gutterBottom>
                     Create Docker File 
                 </Typography>
                 <Box sx={{ width: '100%' }}>
                     <Grid 
                         container 
                         rowSpacing={1} 
-                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                    >                   
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}>                   
                         <Grid item xs={12} sm={6} md={6}>
                             <TextField 
                                 fullWidth
@@ -61,8 +56,8 @@ const FileDocker = () => {
                         <Grid item xs={12} sm={6} md={6}>                        
                             <Typography 
                                 sx={{ fontSize: 12 }} 
-                                color="text.secondary">
-                                    This is be the name of the image that you will build.
+                                color="text.primary">
+                                    This is the name of the image that you will build.
                             </Typography>                        
                         </Grid>
                         <Grid item xs={12} sm={6} md={6}> 
@@ -75,17 +70,19 @@ const FileDocker = () => {
                                 rows={8} 
                                 fullWidth
                                 value={names.file}
-                                onChange={handleChange}
-
-                            />
+                                onChange={handleChange}/>
                         </Grid>                            
                         <Grid item xs={12} sm={6} md={6}>                        
                             <Typography
                             sx={{ fontSize: 12 }} 
-                            color="text.secondary">
-                                By creating a Dockerfile you can build your own customizable image based on a base image,
-                                you can use that same image to later deploy new applications.
-                                Once your image is created you no longer need the Dockerfile, so the Dockerfile content 
+                            color="text.primary">
+                                By creating a Dockerfile 
+                                you can build your own customizable 
+                                image based on a base image,
+                                you can use that same image 
+                                to later deploy new applications.
+                                Once your image is created you no longer 
+                                need the Dockerfile, so the Dockerfile content 
                                 will allways be overwriten.
                             </Typography>                        
                         </Grid>      
